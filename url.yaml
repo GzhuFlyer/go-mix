@@ -1,0 +1,14 @@
+# 数据库连接配置
+database:
+  host: localhost
+  port: 3306
+  user: root
+  password: mypassword
+  dbname: mydatabase
+
+url:
+  local: rtsp://192.168.1.4:554/channel=0,stream=0
+  remote: rtmp://10.240.34.35:1935/live/1111111111
+
+path:
+  ffmpeg: E:/ffmpegYang/ffmpeg/bin/ffmpeg.exe

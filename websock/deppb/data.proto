@@ -1,0 +1,840 @@
+syntax = "proto3";
+
+package appAgent;
+
+option go_package = "./deppb";
+option java_package = "com.skyfend.cuav_core";
+
+// option java_outer_classname =
+// "DbRawAutelRadarPlotTrackBodyEntityProto;EquipmentMessageBoxEntityProto;RadarStatusEntityProto;DroneInfoProto;DroneIDReportProto;RadarTrackInfoProto;DroneStatusInfoProto;RadarStatusInfoProto";
+/*
+
+                   Pb字段定义规范：字段首字母消息。采用驼峰式命名
+
+*/
+
+// protoc --proto_path=. --go_out=:. data.proto
+
+message ClientReport {
+  int32 msgType = 1; //消息类型
+  bytes data = 2;    //具体数据
+}
+message RadarTrackInfo {
+  EquipmentMessageBoxEntity header = 1;
+  repeated DbRawAutelRadarPlotTrackBodyEntity data = 2;
+}
+
+message RadarStatusInfo {
+  EquipmentMessageBoxEntity header = 1;
+  RadarStatusEntity data = 2;
+}
+
+message DroneStatusInfo {
+  EquipmentMessageBoxEntity header = 1;
+  DroneIDReport data = 2;
+}
+message TracerDetectInfo {
+  EquipmentMessageBoxEntity header = 1;
+  TracerDetectReport data = 2;
+}
+message TracerRemoteDetectInfo {
+  EquipmentMessageBoxEntity header = 1;
+  TracerRemoteDetectReport data = 2;
+}
+message TracerFreqDetectInfo {
+  EquipmentMessageBoxEntity header = 1;
+  TracerFreqDetectReport data = 2;
+}
+message TracerFreqDataInfo {
+  EquipmentMessageBoxEntity header = 1;
+  TracerSFreqDataReport data = 2;
+}
+
+message RadarPosture {
+  EquipmentMessageBoxEntity header = 1;
+  RadarUploadPostureEntity data = 2;
+}
+message RadarBeamSteerConfig {
+  EquipmentMessageBoxEntity header = 1;
+  RadarUploadBeamConfigEntity data = 2;
+}
+
+message OtaFileDownloadStatusInfo {
+  EquipmentMessageBoxEntity header = 1;
+  OtaFileDownloadStatus data = 2;
+}
+
+message UpgradeStatusInfo {
+  EquipmentMessageBoxEntity header = 1;
+  UpgradeStatus data = 2;
+}
+message ScreenHeartBeatInfo {
+  EquipmentMessageBoxEntity header = 1;
+  ScreenHeartBeatEntity data = 2;
+}
+
+message ScreenHitStatusInfo {
+  EquipmentMessageBoxEntity header = 1;
+  ScreenHitStatusEntity data = 2;
+}
+
+message ScreenHitResultInfo {
+  EquipmentMessageBoxEntity header = 1;
+  repeated HitResult data = 2;
+}
+
+message SetRadarConnReqInfo {
+  EquipmentMessageBoxEntity header = 1;
+  SetRadarConnReq data = 2;
+}
+
+message RadarFuseLevelInfo {
+  EquipmentMessageBoxEntity header = 1;
+  repeated RadarFuseLevel data = 2;
+}
+message SpooferStatusInfo {
+  EquipmentMessageBoxEntity header = 1;
+  SpooferStatus data = 2;
+}
+//哨兵塔侦测到的无人机消息
+message SflDetectInfo {
+  EquipmentMessageBoxEntity header = 1;
+  GimbalCounterDetectSocketInfo data = 2;
+}
+//哨兵塔发过来的心跳消息
+message SflHeartInfo {
+  EquipmentMessageBoxEntity header = 1;
+  GimbalCounterHeartInfo data = 2;
+}
+//哨兵塔发过来的打击无人机的信息
+message SflHitStateInfo {
+  EquipmentMessageBoxEntity header = 1;
+  GimbalCounterHitSocketInfo data = 2;
+}
+//车载FPV心跳上报消息
+message FpvHeartInfo {
+  EquipmentMessageBoxEntity header = 1;
+  FpvHeartInfoReport data = 2;
+}
+//车载FPV打击状态上报
+message FpvHitStateInfo {
+  EquipmentMessageBoxEntity header = 1;
+  FpvHitStateInfoReport data = 2;
+}
+//车载FPV侦测消息上报
+message FpvDetectInfo {
+  EquipmentMessageBoxEntity header = 1;
+  FpvDetectInfoReport data = 2;
+}
+message FpvVideoStreams {
+  EquipmentMessageBoxEntity header = 1;
+  FpvVideoStreamItem data = 2;
+}
+
+message AgxHeartBeatInfo {
+  EquipmentMessageBoxEntity header = 1;
+  AgxHeartBeatReport data = 2;
+}
+message AgxPerceptionInfo {
+  EquipmentMessageBoxEntity header = 1;
+  AgxPerceptionReport data = 2;
+}
+message AgxDetectInfo {
+  EquipmentMessageBoxEntity header = 1;
+  repeated AgxDetectInfoList data = 2;
+}
+
+message AgxDevStateInfo {
+  EquipmentMessageBoxEntity header = 1;
+  AgxDevStateList data = 2;
+}
+message AgxPTZStateInfo {
+  EquipmentMessageBoxEntity header = 1;
+  AgxPTZStateList data = 2;
+}
+
+message AgxPTZCalibrationInfo{
+  EquipmentMessageBoxEntity header = 1;
+  AgxCalibration data = 2;
+}
+message AgxCalibration {
+  int32 flag   = 1;       
+  float	azimuthOff  =2; 
+  float	elevationOff =3;
+}
+
+
+message EquipmentMessageBoxEntity {
+  string name = 1;
+  string sn = 2;
+
+  int32 equipType = 3; //设备类型
+  int32 msgType = 4;   //消息类型
+}
+
+message DbRawAutelRadarPlotTrackBodyEntity {
+  uint32 objId = 1;
+  int64 headerUid = 2;
+  double azimuth = 3;
+  double objDistInterpol = 4;
+  double elevation = 5;
+  double velocity = 6;
+  int32 dopplerChn = 7;
+  double mag = 8;
+  int32 ambiguous = 9;
+  int32 classification = 10;
+  double classfyProb = 11;
+  float existingProb = 12;
+  double absVel = 13;
+  double orientationAngle = 14;
+  uint32 alive = 15;
+  uint32 twsTasFlag = 16;
+  double x = 17;
+  double y = 18;
+  double z = 19;
+  double vx = 20;
+  double vy = 21;
+  double vz = 22;
+  double ax = 23;
+  double ay = 24;
+  double az = 25;
+  double xVariance = 26;
+  double yVariance = 27;
+  double zVariance = 28;
+  double vxVariance = 29;
+  double vyVariance = 30;
+  double vzVariance = 31;
+  double axVariance = 32;
+  double ayVariance = 33;
+  double azVariance = 34;
+  int32 stateType = 35;
+  int32 motionType = 36;
+  int32 forcastFrameNum = 37;
+  int32 associationNum = 38;
+  uint32 assocBit0 = 39;
+  uint32 assocBit1 = 40;
+  uint32 reserve = 41;
+  uint32 reserved2 = 42;
+  uint32 crc = 43;
+  string createTime = 44;
+  string vendor = 45;
+  string frequency = 46;
+  string model = 47;
+  bool isWhitelist = 48;
+  int32 level = 49;
+}
+
+message RadarStatusEntity {
+  int32 electricity = 1;
+  int32 status = 2;
+  int32 isOnline = 3;
+  string ip = 4;
+  string serialNum = 5;
+  repeated string faults = 6;
+}
+
+message DroneIDReport {
+  uint32 timeStamp = 1;
+  uint32 electricity = 2;
+  string sn = 3;
+  int32 isOnline = 4;
+  int32 batteryStatus = 5; // 0：电池 1：电池 + 适配器（充电） 2：适配器
+  int32 workMode = 6; //工作模式 1:Droneid模式  2:全向侦测模式  3:定向侦测模式
+  int32 workStatus = 7; // TRACER工作状态 bit0~bit3: 0：待机 1: 侦测
+                        // 5：水平扫描中 6：水平瞄准中 7：俯仰扫描中
+                        // 8：俯仰瞄准中 9：瞄准完成 bit4: 0: 没有故障 1：有故障
+  int32 fault = 8; // 0:没有故障   1有故障   2其他故障依次添加
+  int32 alarmLevel = 9;     //告警
+  int32 buzzerOn = 10;      //蜂鸣器
+  int32 vibrationOn = 11;   //马达
+  int32 stealthModeOn = 12; //隐蔽模式
+}
+// Tracer侦测数据
+message TracerDetectReport {
+  string sn = 1;
+  repeated TracerDetectDescription info = 2;
+}
+message TracerDetectDescription {
+  int32 productType = 1;         //无人机类型
+  string droneName = 2;          //无人机品牌+机型
+  string serialNum = 3;          //无人机Sn码
+  double droneLongitude = 4;     //经度
+  double droneLatitude = 5;      //纬度
+  double droneHeight = 6;        //高度
+  double droneYawAngle = 7;      //偏航角
+  double droneSpeed = 8;         //速度
+  double droneVerticalSpeed = 9; //垂直速度
+  double operatorLongitude = 10; //飞手经度
+  double operatorLatitude = 11;  //飞手纬度
+  double freq = 12;              //频率
+  int32 distance = 13;           //距离
+  int32 dangerLevels = 14;       //危险等级
+  int32 role = 15;               //无人机角色
+}
+// TracerRemote侦测数据
+message TracerRemoteDetectReport {
+  string sn = 1;
+  repeated TracerRemoteDetectDescription info = 2;
+}
+message TracerRemoteDetectDescription {
+  int32 productType = 1;     //无人机类型
+  string droneName = 2;      //无人机品牌+机型
+  string serialNum = 3;      //无人机Sn码
+  double droneLongitude = 4; //经度
+  double droneLatitude = 5;  //纬度
+  double droneHeight = 6;    //高度
+  double droneDirection = 7; //无人机角度
+  double droneYawAngle = 8;  //偏航角
+  double droneSpeed = 9;     //速度
+  int32 droneSpeedderection = 10; // 0:无人机向前 1:向后  2:向左  3:向右 4:垂直
+  double droneVerticalSpeed = 11; //垂直速度
+  double operatorLongitude = 12;  //飞手经度
+  double operatorLatitude = 13;   //飞手纬度
+  double freq = 14;               //频率
+  int32 distance = 15;            //距离
+  int32 dangerLevels = 16;        //危险等级
+  int32 role = 17;                //无人机角色
+}
+
+// TracerFreq侦测数据
+message TracerFreqDetectReport {
+  string sn = 1;
+  double qxPower = 2;   //全向功率
+  double dxPower = 3;   //定向功率
+  double dxHorizon = 4; //定向天线水平角(0.01°)
+  repeated TracerFreqDetectDescription info = 5;
+}
+message TracerFreqDetectDescription {
+  int32 uavNumber = 1;     //无人机编号
+  string droneName = 2;    //无人机品牌+机型
+  double droneHorizon = 3; // lsb 目标水平角（0.01°），无效值0x7fffffff
+  double uFreq = 4;        //频率
+  int32 uDangerLevels = 5; //危险等级
+  int32 recerve = 6;       //保留
+}
+// TracerFreqData 上报频谱数据
+message TracerSFreqDataReport {
+  string sn = 1;
+  int32 freqNum = 2; //频点总数
+  repeated TracerSFreqDataDescription info = 3;
+}
+message TracerSFreqDataDescription { float ampValue = 1; }
+
+message ScreenHeartBeatEntity {
+  int32 id = 1;
+  int64 headerId = 2;
+  uint32 timeStamp = 3;
+  uint32 screenStatus = 4;
+  uint32 electricity = 5;
+  uint32 signalStrength = 6;
+  uint32 workStatus = 7;
+  uint32 alarmLevel = 8;
+  uint32 hitFreq = 9;
+  uint32 detectFreq = 10;
+  uint32 x = 11;
+  uint32 y = 12;
+  uint32 z = 13;
+  double gunLongitude = 14;
+  double gunLatitude = 15;
+  int32 gunAltitude = 16;
+  uint32 satellitesNum = 17;
+  double gunDirection = 18;
+  uint32 reHitTime = 19;
+  uint32 hitTime = 20;
+  uint32 uDroneNum = 21;
+  double elevation = 22;
+  int32 isOnline = 23;
+  repeated ScreenHeartUavEntity info = 24;
+}
+
+message ScreenHeartUavEntity {
+  int32 productType = 1;
+  string droneName = 2;
+  string serialNum = 3;
+  double droneLongitude = 4;
+  double droneLatitude = 5;
+  double droneHeight = 6;
+  double droneYawAngle = 7;
+  double droneSpeed = 8;
+  double droneVerticalSpeed = 9;
+  double pilotLongitude = 10;
+  double pilotLatitude = 11;
+  double droneHorizon = 12;
+  double dronePitch = 13;
+  double uFreq = 14;
+  int32 uDistance = 15;
+  int32 uDangerLevels = 16;
+}
+
+message RadarUploadPostureEntity {
+  uint32 reserved = 1;
+  double heading = 2;
+  double pitching = 3;
+  double rolling = 4;
+  double longitude = 5;
+  double latitude = 6;
+  double altitude = 7;
+  double velocityNavi = 8;
+  double sigProcRelativeTime = 9;
+}
+message RadarUploadBeamConfigEntity {
+  int32 aziScanCenter = 1; //方位扫描中心， -60°～+60°，默认为0
+  int32 aziScanScope = 2; //	方位扫描范围， 0、20、40、90、120，默认为120
+  int32 eleScanCenter = 3; //俯仰扫描中心，-20°～+20°，默认为0
+  int32 eleScanScope = 4; //	俯仰扫描范围，0、10、20、40，默认为40
+}
+
+message OtaFileDownloadStatus {
+  int32 status = 1;
+  int32 downloadedPercentage = 2;
+  string fileName = 3;
+  string errMsg = 4;
+  string fallPath = 5;
+}
+
+message UpgradeStatus {
+  string sn = 1;
+  int32 deviceType = 2;
+  int32 status = 3;
+  int64 permil = 4;
+  string pkgPathName = 5;
+  string errMsg = 6;
+}
+
+message HitUavEntity {
+  uint32 objId = 1;
+  uint32 productType = 2;
+  string droneName = 3;
+  string serialNum = 4;
+  int32 droneLongitude = 5;
+  int32 droneLatitude = 6;
+  int32 droneHeight = 7;
+}
+
+message ScreenHitStatusEntity {
+  uint32 workStatus = 1;
+  uint32 droneNum = 2;
+  repeated HitUavEntity uavs = 3;
+}
+
+message HitResult {
+  uint32 objId = 1;
+  uint32 result = 2;
+}
+
+message SetRadarConnReq {
+  string sn = 1;
+  int32 status = 2;
+}
+
+message RadarFuseLevel {
+  string sn = 1;
+  uint32 objId = 2;
+  int32 level = 3;
+}
+
+message SpooferStatus {
+  int32 isOnline = 1;
+  int32 isWorking = 2;
+  int32 gpsStatus = 3;
+  int32 ephemeris = 4;
+  int32 timeSync = 5;
+  double longititude = 6;
+  double latitude = 7;
+  double height = 8;
+}
+
+message UrdDeviceInfo {
+  int32 id = 1;
+  string name = 2;
+  float longitude = 3;
+  float latitude = 4;
+  int32 height = 5;
+  int32 status = 6;
+  int32 azimuth = 7;
+  int32 type = 8;
+  int32 compassStatus = 9;
+  int32 gpsStatus = 10;
+  int32 receiverStatus = 11;
+  int32 antennaStatus = 12;
+  int32 antennaCoverRange = 13;
+}
+
+message UrdDeviceInfoUpload {
+  EquipmentMessageBoxEntity header = 1;
+  UrdDeviceInfo data = 2;
+}
+
+message UrdDroneInfo {
+  int32 id = 1;
+  string uniqueId = 2;
+  int32 targetInfoLength = 3;
+  string targetInfo = 4;
+  int32 stationId = 5;
+  int32 targetAzimuth = 6;
+  int32 targetRange = 7;
+  float longitude = 8;
+  float latitude = 9;
+  int32 height = 10;
+  double frequency = 11;
+  double bandwidth = 12;
+  double signalStrength = 13;
+  int32 trust = 14;
+  string time = 15;
+  int32 dataType = 16;
+  int32 modulation = 17;
+}
+
+message UrdDroneInfoUpload {
+  EquipmentMessageBoxEntity header = 1;
+  UrdDroneInfo data = 2;
+}
+
+message UrdSpectrumInfo {
+  EquipmentMessageBoxEntity header = 1;
+  repeated int32 x = 2;
+  repeated int32 y = 3;
+}
+message GimbalCounterDetectSocketInfo {
+  string sn = 1;
+  int32 detectionNum = 2;
+  repeated GimbalCounterDetectDroneInfo list = 3;
+}
+
+message GimbalCounterDetectDroneInfo {
+  int32 productType = 1;
+  string droneName = 2;
+  string serialNum = 3;
+  double droneLongitude = 4;
+  double droneLatitude = 5;
+  double droneHeight = 6;
+  double droneYawAngle = 7;
+  double droneSpeed = 8;
+  double droneVerticalSpeed = 9;
+  int32 speedDirection = 10;
+  double droneSailLongitude = 11;
+  double droneSailLatitude = 12;
+  double pilotLongitude = 13;
+  double pilotLatitude = 14;
+  double droneHorizon = 15;
+  double dronePitch = 16;
+  double uFreq = 17;
+  int32 uDistance = 18;
+  int32 uDangerLevels = 19;
+  int32 role = 20;
+}
+
+message GimbalCounterHeartInfo {
+  string sn = 1;
+  int32 timeStamp = 2;
+  int32 workStatus = 3;
+  int32 isOnline = 4;
+  int32 hitFreq = 5;
+  double detectFreq = 6;
+  double elevation = 7;
+  double gunDirection = 8;
+  double gunLongitude = 9;
+  double gunLatitude = 10;
+  double gunAltitude = 11;
+  int32 satellitesNum = 12;
+  int32 faultLevel = 13;
+  int32 ctrlFault = 14;
+  int32 aeagFault = 15;
+  int32 tracerFault = 16;
+}
+message GimbalCounterHitSocketInfo {
+  string sn = 1;
+  int32 hitState = 2;
+  int32 productType = 3;
+  string droneName = 4;
+  string serialNum = 5;
+  double droneLongitude = 6;
+  double droneLatitude = 7;
+  double droneHeight = 8;
+  double droneYawAngle = 9;
+  double droneSpeed = 10;
+  double droneVerticalSpeed = 11;
+  int32 speedDirection = 12;
+  double droneSailLongitude = 13;
+  double droneSailLatitude = 14;
+  double pilotLongitude = 15;
+  double pilotLatitude = 16;
+  double droneHorizon = 17;
+  double dronePitch = 18;
+  double uFreq = 19;
+  int32 uDistance = 20;
+  int32 uDangerLevels = 21;
+  int32 role = 22;
+}
+
+message FpvHeartInfoReport {
+  int32 timeStamp = 1;
+  int32 electricity = 2;
+  string sn = 3;
+  int32 isOnline = 4;
+  int32 batteryStatus = 5;
+  int32 workMode = 6;
+  int32 workStatus = 7;
+  int32 alarmLevel = 8;
+}
+
+message FpvHitStateInfoReport {
+  int32 hitState = 1; // 1 打击中   2  打击结束
+}
+
+message FpvDetectInfoReport {
+  string sn = 1;
+  double qxPower = 2;
+  double dxPower = 3;
+  double dxHorizon = 4;
+  repeated FpvDetect list = 5;
+}
+message FpvDetect {
+  int32 uavNumber = 1;
+  string droneName = 2;
+  double droneHorizon = 3;
+  double uFreq = 4;
+  int32 uDangerLevels = 5;
+}
+
+//统一定义无人机属性
+message DroneInfo {
+  int32 reportDevType = 1; //上报消息设备类型
+  int32 role = 2;
+  string droneName = 3;
+  string serialNum = 4;
+  double droneLongitude = 5;
+  double droneLatitude = 6;
+  double droneHeight = 7;
+  double droneYawAngle = 8;
+  double droneSpeed = 9;
+  double droneVerticalSpeed = 10;
+  double operatorLongitude = 11;
+  double operatorLatitude = 12;
+  double distance = 13;
+  int32 dangerLevels = 14;
+  double freq = 15;
+  int32 droneSpeedDerection = 16;
+  double droneHorizon = 17;
+  double qxPower = 18;
+  double dxPower = 19;
+  double dxHorizon = 20;
+  double droneSailLongitude = 21;
+  double droneSailLatitude = 22;
+  double dronePitch = 23;
+  int32 objId = 24;
+  int32 alive = 25;
+}
+
+message FpvVideoStreamItem {
+  uint32 frameIndex = 1; // 帧序号
+  uint32 packMax = 2;    //最大分包数
+  uint32 packIndex = 3;  //分包序号
+  uint32 dataLen = 4;    //数据长度
+  bytes data = 5;        //数据内容
+}
+
+message AgxPerceptionReport {
+  string sn = 1;
+  int32 timeStamp = 2;
+  int32 objId = 3;
+  int32 TargetId = 4;
+  float Zoom = 5;
+  float HFov = 6;
+  float VFov = 7;
+  repeated AgxPerceptionReportInfo list = 8;
+}
+message AgxPerceptionReportInfo {
+  int32 id = 1;
+  int32 classification =
+      2; //目标类别，0x00：未识别0x01：无人机0x02：单兵0x03：车辆0x04：鸟类0x05：直升机
+         //其他无效。（与雷达一致）
+  int32 rectX = 3;
+  int32 rectY = 4;
+  int32 rectW = 5;
+  int32 rectH = 6;
+  int32 rectXV = 7;
+  int32 rectYV = 8;
+  float classFyProb = 9;
+  int32 type = 10;
+  float typeProb = 11;
+  int32 loadLever = 12;
+  int32 dangerLever = 13;
+  float azimuth = 14;
+  float elevation = 15;
+  float range = 16;
+  int32 motionType = 17;
+  int32 bTracked = 18;
+}
+
+message AgxHeartBeatReport {
+  int32 electricity = 1;
+  int32 status = 2;
+  int32 isOnline = 3;
+  string ip = 4;
+  string sn = 5;
+}
+
+message AgxDetectInfoList {
+  uint32 objId = 1;
+  int64 headerUid = 2;
+  double azimuth = 3;
+  double objDistInterpol = 4;
+  double elevation = 5;
+  double velocity = 6;
+  int32 dopplerChn = 7;
+  double mag = 8;
+  int32 ambiguous = 9;
+  int32 classification = 10;
+  double classfyProb = 11;
+  float existingProb = 12;
+  double absVel = 13;
+  double orientationAngle = 14;
+  uint32 alive = 15;
+  uint32 twsTasFlag = 16;
+  double x = 17;
+  double y = 18;
+  double z = 19;
+  double vx = 20;
+  double vy = 21;
+  double vz = 22;
+  double ax = 23;
+  double ay = 24;
+  double az = 25;
+  double xVariance = 26;
+  double yVariance = 27;
+  double zVariance = 28;
+  double vxVariance = 29;
+  double vyVariance = 30;
+  double vzVariance = 31;
+  double axVariance = 32;
+  double ayVariance = 33;
+  double azVariance = 34;
+  int32 stateType = 35;
+  int32 motionType = 36;
+  int32 forcastFrameNum = 37;
+  int32 associationNum = 38;
+  uint32 assocBit0 = 39;
+  uint32 assocBit1 = 40;
+  uint32 reserve = 41;
+  uint32 reserved2 = 42;
+  uint32 crc = 43;
+  string createTime = 44;
+  string vendor = 45;
+  string frequency = 46;
+  string model = 47;
+  bool isWhitelist = 48;
+  int32 level = 49;
+}
+
+message AgxDevStateList {
+  string sn = 1;
+  repeated AgxDeviceSn list = 2;
+}
+message AgxDeviceSn {
+  int32 devType = 1; //设备类型  01雷达    02ptz    04tracer  05无线电设备
+  string devSn = 2;
+}
+
+
+message AgxPTZStateList {
+  string sn = 1; //光电设备SN号
+  int64 timeStamp = 2;
+  float ptzLongitude = 3;
+  float ptzLatitude = 4;
+  float ptzHeight = 5;
+  float azimuth = 6;
+  float elevation = 7;
+  float omegaAz = 8;
+  float omegaEl = 9;
+  float zoom = 10;
+}
+
+message TracerDroneIdRemoteIdDetectDescription {
+  // 无人机名字
+  string name = 1;
+  // 无人机SN码
+  string serialNum = 2;
+ //  // 无人机实名登记号
+ //  string uuid = 3;
+  // 无人机航向角度 (deg)
+  double direction = 3;
+  // 无人机对地速度 (m/s)
+  double speed = 4;
+  // 无人机垂直速度 (m/s)
+  double verticalSpeed = 5;
+  // 无人机距地高度 (m)
+  double height = 6;
+  // 无人机经度 (deg)
+  double longitude = 7;
+  // 无人机纬度 (deg)
+  double latitude = 8;
+  // 无人机飞手经度 (deg)
+  double pilotLongitude = 9;
+  // 无人机飞手纬度 (deg)
+  double pilotLatitude = 10;
+  // 无人机返航点经度 (deg)
+  double homeLongitude = 11;
+  // 无人机返航点纬度 (deg)
+  double homeLatitude = 12;
+ //  // 无人机已录取时间 (ms)
+ //  uint32 recordTime = 14;
+ uint32 aliveTime = 13;
+  // 后续目标信息字段来源掩码：1：RemoteID only; 2：DroneID only; 3：Both (remoteID和DroneID都有)
+  uint32 targetMask = 14;
+
+  // RemoteID only
+   // RemoteID 类型代码
+   uint32 typeCodeRid = 15;
+   // RemoteID 序列号
+   uint32 seqNumRid = 16;
+   // 分类类型
+   uint32 classificationType = 17;
+
+   // 无人机操作员位置类型
+   uint32 operatorLocationType = 18;
+   // 操作状态
+   uint32 operationStatus = 19;
+   uint32 HeightType = 20;
+   // RemoteID 信号频率
+   int32 signalFreqRid = 21;
+   // 无人机RemoteID天线噪声强度 (dBm)
+   int32 NoisePowerRid = 22;
+   // RemoteID 信号功率
+   uint32 signalPowerRid = 23;
+   // RemoteID 时间戳
+   uint32 timestampRid = 24;
+   // 预留字段，默认为0
+    uint32 reserveRid = 25;
+
+  // DroneID only
+  uint32 typeCodeDid = 26;
+  uint32 seqNumDid = 27;
+  // 无人机海拔高度 (m)
+  double altitude = 28;
+  // 无人机X方向速度 (m/s)
+  double speedX = 29;
+  // 无人机Y方向速度 (m/s)
+  double speedY = 30;
+  uint32 signalFreqDid = 31;
+ //  无人机DroneID信号强度(dBm),通道1
+  int32 SignalPowerDidCh1 = 32;
+  // 无人机DroneID信号强度(dBm)，通道2
+  int32 SignalPowerDidCh2 = 33;
+  // 无人机GPS时间戳：1970年1月1日至今毫秒数(ms)
+  uint64 gpsClock = 34;
+  // 预留，默认为0
+   uint32 reserveDid = 35 ;
+  int32 role = 36;               //无人机角色
+}
+// Tracer侦测数据
+message TracerDroneIdRemoteIdDetectReport {
+ string sn = 1;
+ repeated TracerDroneIdRemoteIdDetectDescription info = 2;
+ // string eventId = 3;
+}
+
+message TracerDroneIdRemoteIdDetectInfo {
+ EquipmentMessageBoxEntity header = 1;
+ TracerDroneIdRemoteIdDetectReport data = 2;
+}

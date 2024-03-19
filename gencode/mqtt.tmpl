@@ -1,0 +1,43 @@
+package down
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+
+	logger "adasgitlab.autel.com/tools/cuav_plugin/log"
+	"adasgitlab.autel.com/tools/cuav_server/entity/common"
+	"adasgitlab.autel.com/tools/cuav_server/logic/handler"
+	"adasgitlab.autel.com/tools/cuav_server/logic/uploadcloud/mqtt"
+	"adasgitlab.autel.com/tools/cuav_server/proto/client"
+)
+const (
+    {{.constDefine}}
+)
+func do{{.LogicName}}Logic() []byte {
+    defer func() {
+        if r := recover(); r != nil {
+            err := fmt.Errorf("panic: %v", r)
+            logger.Error("panic:", err)
+        }
+    }()
+    logger.Debug("m = ", m.Payload())
+    p, err := decodeMessage(m.Payload())
+    //json Marshal or UnMarshal error
+    errJSONTypeMsg := errorMsg(fail, p.MsgData.Data.OpsCode, p.Tid, p.Bid, p.Sn, jsonFailMsg)
+    logger.Error("errMsg = ", errJSONTypeMsg)
+    if err != nil {
+        logger.Error("decodeMessage error = ", err)
+        return encodeMessage(errJSONTypeMsg)
+    }
+    encodeOkmsg := make([]byte, 0)
+    logger.Debug("p.MsgData.Data.OpsCode = ", p.MsgData.Data.OpsCode)
+    switch p.MsgData.Data.OpsCode {
+    {{.CaseEvent}}
+    default:
+		unknownOps := errorMsg(unknowOpsCode, p.MsgData.Data.OpsCode, p.Tid, p.Bid, p.Sn, unknowOpsCodeMsg)
+		return encodeMessage(unknownOps)
+	}
+	logger.Debug("encodeSmsg = ", encodeOkmsg)
+	return encodeOkmsg
+}
